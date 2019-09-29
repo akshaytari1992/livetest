@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<style type="text/css">
+		nav ul li{
+			display: inline-block;
+			position: relative;
+		}
+		nav ul li a{
+			text-decoration:none;
+			padding:15px;
+			color: blue;
+		}
+		nav ul ul{
+			position: absolute;
+			display: none;
+		}
+
+		nav ul li:hover ul{
+			display: block;
+		}
+		#nav-click{
+			display: none;
+		}
+
+	
+		#slider{
+			width: 700px;
+			position: relative;
+			margin: 0;
+			padding: 0;
+			overflow:hidden;
+		}
+		.slides{
+			width:2800px;
+			display: block;
+			margin: 0;
+			padding: 0;
+		}
+		.slide{
+			float: left;
+			list-style: none;
+		}
+
+		@media(max-width: 480px){
+			nav ul {
+				display: none;
+				position: relative;
+			}
+			nav ul li{
+				display: block;
+			}
+			#nav-click{
+				display: block;
+			}
+
+			nav ul ul {
+				position: static;
+			}
+		}
+	</style>
+</head>
+<body>
+
+<nav>
+	<div id="nav-click">Menu</div>
+	<ul>
+		<li><a href="#">Home</a></li>
+		<li><a href="#">Products</a>
+			<ul class="sibling">
+				<li><a href="#">Product 1</a></li>
+				<li><a href="#">Product 2</a></li>
+				<li><a href="#">Product 3</a></li>
+				<li><a href="#">Product 4</a></li>
+
+			</ul>
+		</li>
+		<li><a href="#">map</a></li>
+		<li><a href="#">contact</a>
+		<ul class="sibling">
+				<li><a href="#">Contact 1</a></li>
+				<li><a href="#">Contact 2</a></li>
+				<li><a href="#">Contact 3</a></li>
+				<li><a href="#">Contact 4</a></li>
+
+			</ul>
+		</li>
+	</ul>
+</nav>
+<div>
+	<div id="slider">
+		<ul class="slides">
+			<li class="slide"><img src="1.jpg" class="img-responsive"></li>
+			<li class="slide"><img src="2.jpg" class="img-responsive"></li>
+			<li class="slide"><img src="3.jpg" class="img-responsive"></li>
+			<li class="slide"><img src="4.jpg" class="img-responsive"></li>
+		</ul>
+	</div>
+</div>
+
+
+<script>
+	$('document').ready(function(){
+		$('#nav-click').click(function(){
+			$('nav ul').slideToggle();
+			$('nav ul ul').css('display','none');
+		});
+
+		$('nav ul li a:not(:only-child)').click(function(){
+			$(this).siblings('.sibling').slideToggle();
+			$('.sibling').not($(this).siblings()).hide();
+		});
+
+		var width=700;
+			var animationSpeed=1000;
+			var pause=3000;
+			var currentSlider=1;
+
+			var $slider=$('#slider');
+			var $sliderContainer=($slider).find('.slides');
+			var $slide=($sliderContainer).find('.slide');
+		setInterval(function(){
+			$($sliderContainer).animate({'margin-left':'-='+width},animationSpeed,function(){
+				currentSlider++;
+				if(currentSlider === $slide.length){
+					currentSlider=1;
+					$sliderContainer.css('margin-left','0');
+				}	
+			}, pause);
+
+
+
+
+
+	});
+</script>
+</body>
+</html>
